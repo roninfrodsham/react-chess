@@ -1,0 +1,16 @@
+.border {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  background-color: #495b75;
+}
+
+.chessboard {
+  width: 90%;
+  height: 90%;
+  display: grid;
+  place-self: center;
+  grid-template-columns: repeat(8, 12.5%);
+  grid-template-rows: repeat(8, 12.5%);
+  position: relative;
+}
