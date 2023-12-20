@@ -1,18 +1,27 @@
 import Square from "./Square";
+import { FILES, RANKS, PIECE_POSITIONS } from "../constants";
 
 import "./Chessboard.css";
 
 const Chessboard = () => {
-  const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
-  const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"];
-
   const board = [];
 
-  for (let i = ranks.length - 1; i >= 0; i--) {
-    for (let j = 0; j < files.length; j++) {
-      const squareID = `${files[j]}${ranks[i]}`;
+  for (let i = RANKS.length - 1; i >= 0; i--) {
+    for (let j = 0; j < FILES.length; j++) {
+      const squareName = `${FILES[j]}${RANKS[i]}`;
+      const pieceData =
+        PIECE_POSITIONS[squareName] !== undefined
+          ? PIECE_POSITIONS[squareName]
+          : undefined;
 
-      board.push(<Square key={squareID} name={squareID} number={i + j} />);
+      board.push(
+        <Square
+          key={squareName}
+          name={squareName}
+          number={i + j}
+          pieceData={pieceData}
+        />
+      );
     }
   }
 
