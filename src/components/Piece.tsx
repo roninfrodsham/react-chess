@@ -15,7 +15,7 @@ const Piece = ({ name, pieceData }: PieceProps) => {
   const PieceComponent = PieceComponents[pieceData.piece];
 
   return (
-    <div className='pieceContainer' data-name={name}>
+    <div className='piece' data-name={name} data-piece={pieceData.piece}>
       <PieceComponent colour={pieceData.colour} />
     </div>
   );
