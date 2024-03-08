@@ -1,1 +1,1 @@
-export { default as Chessboard } from "./Chessboard";
+export { Chessboard } from "./Chessboard";

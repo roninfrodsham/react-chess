@@ -1,3 +1,5 @@
+import { PiecesProps } from "./types";
+
 // files are the columns on a chess board
 export const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
 // rannks are the rows on a chess board
@@ -136,11 +138,4 @@ export const PIECE_POSITIONS: PiecesProps = {
     piece: "rook",
     colour: BLACK,
   },
-};
-
-export type PiecesProps = {
-  [key: string]: {
-    piece: string;
-    colour: string;
-  };
 };

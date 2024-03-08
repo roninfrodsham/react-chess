@@ -1,13 +1,27 @@
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import Square from "./Square";
 import { FILES, RANKS, PIECE_POSITIONS } from "../constants";
 
 import "./Chessboard.css";
 
-const Chessboard = () => {
+function Chessboard() {
   const chessboardRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  const board = [];
+  const board = useMemo(() => {
+    const board = [];
+
+    for (let i = RANKS.length - 1; i >= 0; i--) {
+      for (let j = 0; j < FILES.length; j++) {
+        const squareName = `${FILES[j]}${RANKS[i]}`;
+        const pieceData = PIECE_POSITIONS[squareName] !== undefined ? PIECE_POSITIONS[squareName] : undefined;
+
+        board.push(<Square key={squareName} name={squareName} number={i + j} pieceData={pieceData} />);
+      }
+    }
+
+    return board;
+  }, []);
+
   let selectedPiece: HTMLElement | null = null;
 
   const selectPiece = (e: React.MouseEvent<Element, MouseEvent>) => {
@@ -17,12 +31,8 @@ const Chessboard = () => {
       element.style.width = `${elementInfo.width}px`;
       element.style.height = `${elementInfo.height}px`;
       element.style.position = "absolute";
-      element.style.left = `${
-        e.clientX - chessboardRef.current.offsetLeft - elementInfo.width / 2
-      }px`;
-      element.style.top = `${
-        e.clientY - chessboardRef.current.offsetTop - elementInfo.height / 2
-      }px`;
+      element.style.left = `${e.clientX - chessboardRef.current.offsetLeft - elementInfo.width / 2}px`;
+      element.style.top = `${e.clientY - chessboardRef.current.offsetTop - elementInfo.height / 2}px`;
 
       selectedPiece = element;
     }
@@ -60,29 +70,8 @@ const Chessboard = () => {
   };
 
   const dropPiece = () => {
-    if (selectedPiece) {
-      selectedPiece = null;
-    }
+    selectedPiece = null;
   };
-
-  for (let i = RANKS.length - 1; i >= 0; i--) {
-    for (let j = 0; j < FILES.length; j++) {
-      const squareName = `${FILES[j]}${RANKS[i]}`;
-      const pieceData =
-        PIECE_POSITIONS[squareName] !== undefined
-          ? PIECE_POSITIONS[squareName]
-          : undefined;
-
-      board.push(
-        <Square
-          key={squareName}
-          name={squareName}
-          number={i + j}
-          pieceData={pieceData}
-        />
-      );
-    }
-  }
 
   return (
     <div className='border'>
@@ -97,6 +86,6 @@ const Chessboard = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Chessboard;
+export { Chessboard };
